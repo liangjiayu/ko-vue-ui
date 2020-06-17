@@ -1,7 +1,11 @@
 import Vue from 'vue';
 
-// 可以使用 `VueConstructor` 接口
 // 来声明全局 property
+declare module 'vue/types/vue' {
+  interface Vue {}
+}
+
+// 可以使用 `VueConstructor` 接口
 declare module 'vue/types/vue' {
   interface VueConstructor {
     install?: any;
