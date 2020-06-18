@@ -1,5 +1,20 @@
 <template>
-  <button class="ko-button" @click="handleClick">
+  <button
+    class="ko-button"
+    :type="nativeType"
+    :disabled="disabled"
+    :class="[
+      type&&`ko-button--${type}`,
+      size&&`ko-button--${size}`,
+      {
+      'ko-button--plain':plain,
+      'ko-button--round':round,
+      'ko-button--disabled':disabled,
+      'ko-button--block':block,
+      }
+    ]"
+    @click="handleClick"
+  >
     <slot></slot>
   </button>
 </template>
@@ -12,6 +27,33 @@ import Vue from 'vue';
 export default Vue.extend({
   name: 'ko-button',
 
+  props: {
+    type: {
+      type: String, //primary / success / warning / danger / info / text
+      default: 'default',
+    },
+    size: {
+      type: String, // large normal small  mini
+      default: 'normal',
+    },
+    plain: {
+      type: Boolean,
+    },
+    round: {
+      type: Boolean,
+    },
+    nativeType: {
+      type: String,
+      default: 'button',
+    },
+    disabled: {
+      type: Boolean,
+    },
+    block: {
+      type: Boolean,
+    },
+  },
+
   methods: {
     handleClick(event: Event) {
       this.$emit('click', event);
@@ -21,18 +63,5 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.ko-button {
-  user-select: none;
-  cursor: pointer;
-  display: inline-block;
-  line-height: 1;
-  padding: 12px 20px;
-  outline: 0;
-  margin: 0;
-  border: 1px solid #dcdfe6;
-  border-radius: 4px;
-  background-color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-}
+@import './index.scss';
 </style>

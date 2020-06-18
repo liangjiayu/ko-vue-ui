@@ -1,3 +1,4 @@
+import './style/common/global.scss';
 import button from './components/button';
 
 const components = [button];
@@ -5,11 +6,7 @@ const components = [button];
 // eslint-disable-next-line
 function install(Vue: any) {
   components.forEach((item) => {
-    if (item.install) {
-      Vue.use(item);
-    } else {
-      Vue.component(item.options.name, item);
-    }
+    Vue.use(item);
   });
 }
 

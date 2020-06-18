@@ -1,21 +1,27 @@
 <template>
   <div id="app">
-    <div>
-      <ko-button @click="aa">111</ko-button>
+    <div class="app-demo">
+      <demo></demo>
     </div>
   </div>
 </template>
 
 <script>
+import demo from '../src/components/button/demo/index';
+
 export default {
   name: 'App',
-  methods: {
-    aa() {
-      console.log(this);
-    },
+  components: {
+    demo: demo,
   },
+  methods: {},
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.app-demo {
+  width: 1240px;
+  margin: 0 auto;
+  padding: 200px 0;
+}
 </style>

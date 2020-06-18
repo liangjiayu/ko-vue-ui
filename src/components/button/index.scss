@@ -1,0 +1,129 @@
+@mixin btn-type($color, $bg-color, $border-color) {
+  color: $color;
+  background-color: $bg-color;
+  border-color: $border-color;
+
+  &:hover {
+    color: $color;
+    background-color: lighten($bg-color, 6%);
+    border-color: lighten($bg-color, 6%);
+  }
+}
+
+.ko-button {
+  user-select: none;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+  padding: 10px 20px;
+  border: 1px solid $--border-color-base;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  color: $--color-text-regular;
+
+  &:hover {
+    color: $--color-primary;
+    background-color: lighten($--color-primary, 35%);
+    border-color: lighten($--color-primary, 30%);
+  }
+
+  &--primary {
+    @include btn-type($--color-white, $--color-primary, $--color-primary);
+  }
+
+  &--success {
+    @include btn-type($--color-white, $--color-success, $--color-success);
+  }
+
+  &--warning {
+    @include btn-type($--color-white, $--color-warning, $--color-warning);
+  }
+
+  &--danger {
+    @include btn-type($--color-white, $--color-danger, $--color-danger);
+  }
+
+  &--info {
+    @include btn-type($--color-white, $--color-info, $--color-info);
+  }
+
+  // plain
+  &--plain {
+    background-color: #fff;
+    &.ko-button--primary {
+      color: $--color-primary;
+      &:hover {
+        color: #fff;
+        background-color: $--color-primary;
+      }
+    }
+
+    &.ko-button--success {
+      color: $--color-success;
+      &:hover {
+        color: #fff;
+        background-color: $--color-success;
+      }
+    }
+
+    &.ko-button--warning {
+      color: $--color-warning;
+      &:hover {
+        color: #fff;
+        background-color: $--color-warning;
+      }
+    }
+
+    &.ko-button--danger {
+      color: $--color-danger;
+      &:hover {
+        color: #fff;
+        background-color: $--color-danger;
+      }
+    }
+
+    &.ko-button--info {
+      color: $--color-info;
+      &:hover {
+        color: #fff;
+        background-color: $--color-info;
+      }
+    }
+  }
+
+  // round
+  &--round {
+    border-radius: 20px;
+  }
+
+  // size
+  &--large {
+    padding: 12px 20px;
+  }
+
+  &--normal {
+    padding: 10px 20px;
+  }
+
+  &--small {
+    font-size: 12px;
+    padding: 9px 15px;
+  }
+
+  &--mini {
+    font-size: 12px;
+    padding: 7px 15px;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &--block {
+    display: block;
+    width: 100%;
+  }
+}

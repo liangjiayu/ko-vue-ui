@@ -1,0 +1,166 @@
+@charset 'utf-8';
+
+/* reset v1.5 */
+
+// root
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+form,
+button,
+input,
+textarea,
+select,
+td,
+th,
+blockquote,
+pre,
+fieldset,
+legend {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+//  Body
+body {
+  font-size: 12px;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC,
+    Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei,
+    sans-serif;
+}
+
+// Text
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  // font-size: 100%;
+  font-weight: 500;
+}
+
+b,
+em,
+i,
+small,
+th {
+  // font-size: 100%;
+  font-style: normal;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+// link
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+// Media
+iframe {
+  display: block;
+  border: 0;
+}
+
+img {
+  border-style: none;
+  vertical-align: middle;
+}
+
+embed,
+iframe,
+object,
+audio,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+// Table
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// Form
+
+button,
+input,
+select,
+textarea {
+  outline: none;
+  border-style: none;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+// others
+a,
+area,
+button,
+[role='button'],
+input:not([type='range']),
+label,
+select,
+summary,
+textarea {
+  touch-action: manipulation;
+}
+
+.clearfloat:after {
+  font-size: 0;
+  display: block;
+  visibility: hidden;
+  clear: both;
+  height: 0;
+  content: ' ';
+}
+
+.clearfloat {
+  *zoom: 1;
+}
+
+.clearboth {
+  clear: both;
+}
+
+/* reset v1.5  */
+
+[class^='ko-'] {
+  box-sizing: border-box;
+}
