@@ -15,4 +15,17 @@ module.exports = {
       },
     },
   },
+
+  chainWebpack(config) {
+    const svgRule = config.module.rule('svg');
+    svgRule.uses.clear();
+    svgRule
+      .use('raw-loader')
+      .loader('raw-loader')
+      .end()
+      .use('svgo-loader')
+      .loader('svgo-loader')
+      .options({})
+      .end();
+  },
 };

@@ -1,7 +1,9 @@
 import './style/common/global.scss';
 import button from './components/button';
+import icon from './components/icon';
+import iconx from './components/iconx';
 
-const components = [button];
+const components = [button, icon, iconx];
 
 // eslint-disable-next-line
 function install(Vue: any) {
