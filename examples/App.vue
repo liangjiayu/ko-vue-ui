@@ -9,7 +9,8 @@
 <script>
 // import demo from '../src/components/button/demo/index';
 // import demo from '../src/components/icon/demo.vue';
-import demo from '../src/components/iconx/demo.vue';
+// import demo from '../src/components/iconx/demo.vue';
+import demo from '../src/components/message-box/demo'
 
 
 export default {

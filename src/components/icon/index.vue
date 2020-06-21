@@ -28,14 +28,29 @@ export default Vue.extend({
     };
   },
 
-  created() {
-    let svg = '';
-    try {
-      svg = require(`bootstrap-icons/icons/${this.name}.svg`).default;
-    } catch (error) {
-      console.error(`bootstrap-icons库不存在 name 值为(${this.name})的icon，无此icon!`);
-    }
-    this.svgMain = svg;
+  watch: {
+    name: {
+      immediate: true,
+      handler(val) {
+        if (val) {
+          this.findIcon();
+        }
+      },
+    },
+  },
+
+  methods: {
+    findIcon() {
+      let svg = '';
+      try {
+        svg = require(`bootstrap-icons/icons/${this.name}.svg`).default;
+      } catch (error) {
+        console.error(
+          `bootstrap-icons库不存在 name 值为(${this.name})的icon，无此icon!`
+        );
+      }
+      this.svgMain = svg;
+    },
   },
 });
 </script>

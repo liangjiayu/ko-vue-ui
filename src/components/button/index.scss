@@ -23,6 +23,11 @@
   font-weight: 500;
   color: $--color-text-regular;
 
+  // TODO
+  + .ko-button {
+    margin-left: 10px;
+  }
+
   &:hover {
     color: $--color-primary;
     background-color: lighten($--color-primary, 35%);
