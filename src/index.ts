@@ -1,10 +1,10 @@
-import './style/common/global.scss';
+import './style/index.scss';
 import button from './components/button';
 import icon from './components/icon';
 import iconx from './components/iconx';
-// import MessageBox from './components/message-box';
+import Alert from './components/alert';
 
-const components = [button, icon, iconx];
+const components = [button, icon, iconx, Alert];
 
 // eslint-disable-next-line
 function install(Vue: any) {

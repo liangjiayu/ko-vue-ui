@@ -11,7 +11,8 @@
 // import demo from '../src/components/icon/demo.vue';
 // import demo from '../src/components/iconx/demo.vue';
 // import demo from '../src/components/message-box/demo'
-import demo from '../src/components/message/demo';
+// import demo from '../src/components/message/demo';
+import demo from '../src/components/alert/demo';
 
 export default {
   name: 'App',
