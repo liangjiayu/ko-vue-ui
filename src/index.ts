@@ -3,8 +3,10 @@ import button from './components/button';
 import icon from './components/icon';
 import iconx from './components/iconx';
 import Alert from './components/alert';
+import Row from './components/row';
+import Col from './components/col';
 
-const components = [button, icon, iconx, Alert];
+const components = [button, icon, iconx, Alert, Row, Col];
 
 // eslint-disable-next-line
 function install(Vue: any) {

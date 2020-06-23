@@ -12,7 +12,8 @@
 // import demo from '../src/components/iconx/demo.vue';
 // import demo from '../src/components/message-box/demo'
 // import demo from '../src/components/message/demo';
-import demo from '../src/components/alert/demo';
+// import demo from '../src/components/alert/demo';
+import demo from '../src/components/row/demo';
 
 export default {
   name: 'App',
@@ -28,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .app-demo {
-  width: 1240px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 200px 0;
 }
