@@ -13,7 +13,8 @@
 // import demo from '../src/components/message-box/demo'
 // import demo from '../src/components/message/demo';
 // import demo from '../src/components/alert/demo';
-import demo from '../src/components/row/demo';
+// import demo from '../src/components/row/demo';
+import demo from '../src/components/radio/demo';
 
 export default {
   name: 'App',
