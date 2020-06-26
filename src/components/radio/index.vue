@@ -30,32 +30,56 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { insertType } from '../../utils/types';
 
-export default Vue.extend({
+export interface KoRadioType {
+  RadioGroup: any;
+}
+
+let KoRadio = insertType<KoRadioType, Vue>(Vue);
+
+export default KoRadio.extend({
   name: 'ko-radio',
+
+  inject: {
+    RadioGroup: {
+      from: 'RadioGroup',
+      default: null,
+    },
+  },
 
   props: {
     value: {},
     label: {},
-    disabled: {
-      type: Boolean,
-    },
-    name: {
-      type: String,
-    },
+    disabled: Boolean,
+    name: String,
+  },
+
+  data() {
+    return {};
   },
 
   computed: {
     currentValue: {
-      get(): any {
-        return this.value;
+      get(): unknown {
+        return this.isGroup ? this.RadioGroup.value : this.value;
       },
-      set(val: any) {
+      set(val: unknown) {
         this.$emit('input', val);
       },
     },
 
+    isGroup() {
+      if (this.RadioGroup) {
+        return true;
+      }
+      return false;
+    },
+
     isDisabled(): boolean {
+      if (this.isGroup) {
+        return this.RadioGroup.disabled;
+      }
       return this.disabled;
     },
 
@@ -67,7 +91,8 @@ export default Vue.extend({
   methods: {
     handleChange() {
       this.currentValue = this.label;
-      this.$emit('change', this.currentValue);
+      this.$emit('change', this.label);
+      this.isGroup && this.RadioGroup.changeValue(this.label);
     },
   },
 });
