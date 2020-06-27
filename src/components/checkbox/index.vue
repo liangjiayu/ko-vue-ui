@@ -1,11 +1,18 @@
 <template>
-  <label class="ko-checkbox" :class="[{'ko-checkbox--checked':isChecked}]">
+  <label
+    class="ko-checkbox"
+    :class="[
+    {'ko-checkbox--checked':isChecked},
+    {'ko-checkbox--disabled':isDisabled}
+    ]"
+  >
     <div class="ko-checkbox__input">
       <div class="ko-checkbox__inner"></div>
       <input
         type="checkbox"
         class="ko-checkbox__origin"
         :checked="isChecked"
+        :disabled="isDisabled"
         :name="name"
         :value="label"
         @change="handleChange"
@@ -44,19 +51,34 @@ export default Vue.extend({
       },
     },
 
-    isDisabled() {
-      return false;
+    isDisabled(): boolean {
+      return this.disabled;
     },
 
     isChecked(): boolean {
-      if (this.trueLabel && this.falseLabel) {
-        if (typeof this.currentValue === 'boolean') {
-          return this.currentValue
-        }
+      if (this.isReplaceValue) {
         return this.currentValue === this.trueLabel;
       }
-      return this.currentValue;
+      return !!this.currentValue;
     },
+
+    // 需要使用 true-labe的值
+    isReplaceValue(): boolean {
+      if (this.trueLabel !== undefined && this.falseLabel !== undefined) {
+        return true;
+      }
+      return false;
+    },
+  },
+
+  created() {
+    if (this.isReplaceValue) {
+      if (typeof this.currentValue === 'boolean') {
+        this.currentValue = this.currentValue
+          ? this.trueLabel
+          : this.falseLabel;
+      }
+    }
   },
 
   methods: {
@@ -64,10 +86,11 @@ export default Vue.extend({
       let checked = e.target.checked;
       let value;
       if (checked) {
-        value = this.trueLabel === undefined ? true : this.trueLabel;
+        value = this.isReplaceValue ? this.trueLabel : true;
       } else {
-        value = this.falseLabel === undefined ? false : this.falseLabel;
+        value = this.isReplaceValue ? this.falseLabel : false;
       }
+
       this.currentValue = value;
     },
   },
@@ -97,6 +120,12 @@ export default Vue.extend({
   }
 
   &--disabled {
+    cursor: not-allowed;
+    color: $--color-text-placeholder;
+    .ko-checkbox__inner {
+      border-color: $--color-text-placeholder;
+      background-color: $--color-text-placeholder;
+    }
   }
 
   &__input {
