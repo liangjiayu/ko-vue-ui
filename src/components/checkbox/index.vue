@@ -7,6 +7,7 @@
         class="ko-checkbox__origin"
         :checked="isChecked"
         :name="name"
+        :value="label"
         @change="handleChange"
       />
     </div>
@@ -38,7 +39,7 @@ export default Vue.extend({
       get(): any {
         return this.value;
       },
-      set(val: boolean) {
+      set(val: any) {
         this.$emit('input', val);
       },
     },
@@ -48,20 +49,26 @@ export default Vue.extend({
     },
 
     isChecked(): boolean {
-      return this.currentValue === this.trueLabel;
+      if (this.trueLabel && this.falseLabel) {
+        if (typeof this.currentValue === 'boolean') {
+          return this.currentValue
+        }
+        return this.currentValue === this.trueLabel;
+      }
+      return this.currentValue;
     },
   },
 
   methods: {
     handleChange(e: any) {
       let checked = e.target.checked;
+      let value;
       if (checked) {
-        this.currentValue =
-          this.trueLabel === undefined ? true : this.trueLabel;
+        value = this.trueLabel === undefined ? true : this.trueLabel;
       } else {
-        this.currentValue =
-          this.falseLabel === undefined ? false : this.falseLabel;
+        value = this.falseLabel === undefined ? false : this.falseLabel;
       }
+      this.currentValue = value;
     },
   },
 });
