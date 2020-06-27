@@ -8,6 +8,7 @@ import Col from './components/col';
 import Radio from './components/radio';
 import RadioGroup from './components/radio-group';
 import Checkbox from './components/checkbox';
+import CheckboxGroup from './components/checkbox-group';
 
 const components = [
   button,
@@ -19,6 +20,7 @@ const components = [
   Radio,
   RadioGroup,
   Checkbox,
+  CheckboxGroup,
 ];
 
 // eslint-disable-next-line
