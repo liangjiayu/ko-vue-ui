@@ -7,8 +7,19 @@ import Row from './components/row';
 import Col from './components/col';
 import Radio from './components/radio';
 import RadioGroup from './components/radio-group';
+import Checkbox from './components/checkbox';
 
-const components = [button, icon, iconx, Alert, Row, Col, Radio, RadioGroup];
+const components = [
+  button,
+  icon,
+  iconx,
+  Alert,
+  Row,
+  Col,
+  Radio,
+  RadioGroup,
+  Checkbox,
+];
 
 // eslint-disable-next-line
 function install(Vue: any) {

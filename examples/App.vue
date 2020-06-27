@@ -14,7 +14,8 @@
 // import demo from '../src/components/message/demo';
 // import demo from '../src/components/alert/demo';
 // import demo from '../src/components/row/demo';
-import demo from '../src/components/radio-group/demo';
+// import demo from '../src/components/radio-group/demo';
+import demo from '../src/components/checkbox/demo'
 
 export default {
   name: 'App',
