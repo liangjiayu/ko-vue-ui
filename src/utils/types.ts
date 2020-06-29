@@ -1,7 +1,7 @@
 import Vue, { VueConstructor } from 'vue';
 
 /**
- *  插入类型 暂用于 inject 的数据问题
+ *  插入类型 暂用于 inject mixins 的数据问题
  * @param vue
  * @example
  *  insertType<types,Vue>(Vue)

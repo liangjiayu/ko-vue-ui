@@ -14,6 +14,7 @@ module.exports = {
   rules: {
     'prefer-const': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-empty-function': 'warn',
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
