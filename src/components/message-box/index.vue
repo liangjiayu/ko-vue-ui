@@ -1,47 +1,42 @@
 <template>
-  <div class="ko-msg-box__root">
-    <transition name="msgbox-fade">
-      <div class="ko-msg-box__wrap" v-show="visible" @click.self="handleWrapClick()">
-        <div class="ko-msg-box" :class="[customClass]">
-          <div class="ko-msg-box__header">
-            <div class="ko-msg-box__title">{{ title }}</div>
-            <div class="ko-msg-box__close" v-show="showClose" @click="handleAction('close')">
-              <ko-icon name="x"></ko-icon>
-            </div>
-          </div>
-          <div class="ko-msg-box__content">
-            <div class="ko-msg-box__main">
-              <div class="ko-msg-box__icon" :class="[type]" v-if="iconName">
-                <ko-icon :name="iconName"></ko-icon>
-              </div>
-              <div class="ko-msg-box__word">
-                <p v-if="!dangerouslyUseHTMLString">{{ message }}</p>
-                <p v-else v-html="message"></p>
-              </div>
-            </div>
-          </div>
-          <div class="ko-msg-box__btns">
-            <ko-button
-              size="small"
-              :class="[cancelButtonClass]"
-              v-if="showCancelButton"
-              @click="handleAction('cancel')"
-            >{{ cancelButtonText }}</ko-button>
-            <ko-button
-              size="small"
-              :class="[confirmButtonClass]"
-              v-if="showConfirmButton"
-              type="primary"
-              @click="handleAction('confirm')"
-            >{{ confirmButtonText }}</ko-button>
+  <transition name="msgbox-fade">
+    <div class="ko-msg-box__wrap" v-show="visible" @click.self="handleWrapClick()">
+      <div class="ko-msg-box" :class="[customClass]">
+        <div class="ko-msg-box__header">
+          <div class="ko-msg-box__title">{{ title }}</div>
+          <div class="ko-msg-box__close" v-show="showClose" @click="handleAction('close')">
+            <ko-icon name="x"></ko-icon>
           </div>
         </div>
+        <div class="ko-msg-box__content">
+          <div class="ko-msg-box__main">
+            <div class="ko-msg-box__icon" :class="[type]" v-if="iconName">
+              <ko-icon :name="iconName"></ko-icon>
+            </div>
+            <div class="ko-msg-box__word">
+              <p v-if="!dangerouslyUseHTMLString">{{ message }}</p>
+              <p v-else v-html="message"></p>
+            </div>
+          </div>
+        </div>
+        <div class="ko-msg-box__btns">
+          <ko-button
+            size="small"
+            :class="[cancelButtonClass]"
+            v-if="showCancelButton"
+            @click="handleAction('cancel')"
+          >{{ cancelButtonText }}</ko-button>
+          <ko-button
+            size="small"
+            :class="[confirmButtonClass]"
+            v-if="showConfirmButton"
+            type="primary"
+            @click="handleAction('confirm')"
+          >{{ confirmButtonText }}</ko-button>
+        </div>
       </div>
-    </transition>
-    <transition name="modal-mask">
-      <div class="ko-modal-mask" v-show="visible"></div>
-    </transition>
-  </div>
+    </div>
+  </transition>
 </template>
 
 
@@ -49,6 +44,7 @@
 import Vue from 'vue';
 import KoIcon from '../icon';
 import KoButton from '../button';
+import popup from '../../mixins/popup';
 
 const iconMap: any = {
   success: 'check-circle-fill',
@@ -65,9 +61,12 @@ export default Vue.extend({
     KoButton,
   },
 
+  mixins: [popup],
+
   data() {
     return {
-      visible: false,
+      // visible: false, // 该属性是由 js注入的，所以是 data里面的，响应属性
+
       // eslint-disable-next-line vue/no-reserved-keys
       _callback: null as any,
 
@@ -77,7 +76,7 @@ export default Vue.extend({
       iconClass: '',
       showInput: false, // TODO
       showClose: true,
-      lockScroll: true,
+      // lockScroll: true,
       closeOnClickModal: true,
       inputValue: null,
       inputPlaceholder: '',
@@ -108,23 +107,14 @@ export default Vue.extend({
   },
 
   watch: {
-    visible(val) {
-      if (val) {
-        this.handleOpen();
-      }
-    },
+    visible(val) {},
   },
 
   methods: {
-    handleOpen() {
-      if (this.lockScroll) {
-        document.body.classList.add('ko-popup-lock');
-      }
-    },
+    handleOpen() {},
 
     handleClose() {
-      this.visible = false;
-      document.body.classList.remove('ko-popup-lock');
+      (this as any).visible = false;
     },
 
     handleAction(action: string) {
@@ -263,41 +253,6 @@ export default Vue.extend({
   }
   100% {
     transform: translate3d(0, -20px, 0);
-    opacity: 0;
-  }
-}
-
-// mask
-.ko-modal-mask {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-mask-enter-active {
-  animation: modal-mask-in 0.2s ease;
-}
-
-.modal-mask-leave-active {
-  animation: modal-mask-out 0.2s ease forwards;
-}
-
-@keyframes modal-mask-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-  }
-}
-
-@keyframes modal-mask-out {
-  0% {
-  }
-  100% {
     opacity: 0;
   }
 }

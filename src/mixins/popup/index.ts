@@ -7,6 +7,42 @@ const context = {
     this.zIndex++;
     return this.zIndex;
   },
+  overlay: null,
+  stack: [],
+};
+
+const PopupManager = {
+  zIndex: 1000,
+
+  Modal: null as any,
+
+  modalStack: [],
+
+  showModal() {
+    if (!this.Modal) {
+      this.genModal();
+    }
+    this.Modal.visible = true;
+  },
+
+  genModal() {
+    let Modal = new KoModalMask({});
+    Modal.$mount();
+    document.body.appendChild(Modal.$el);
+    this.Modal = Modal;
+  },
+
+  closeModal() {
+    if (!this.Modal) {
+      return;
+    }
+    this.Modal.visible = false;
+  },
+
+  nextIndex() {
+    this.zIndex++;
+    return this.zIndex;
+  },
 };
 
 export default Vue.extend({
@@ -47,12 +83,12 @@ export default Vue.extend({
       if (val) {
         this.showOverlay();
         this.lockBody();
-        this.addEscEvent();
         this.updataZIndex();
+        // this.addEscEvent();
       } else {
-        this.removeOverlay();
+        this.closeOverlay();
         this.noLockBody();
-        this.removeEscEvent();
+        // this.removeEscEvent();
       }
     },
   },
@@ -63,28 +99,15 @@ export default Vue.extend({
         return;
       }
 
-      if (!this.overlay) {
-        let overlay = new KoModalMask({});
-        overlay.$mount();
-
-        document.body.appendChild(overlay.$el);
-        this.overlay = overlay;
-      }
-
-      this.overlay.visible = true;
+      PopupManager.showModal();
     },
 
-    removeOverlay() {
+    closeOverlay() {
       if (!this.modal) {
         return;
       }
 
-      this.overlay.visible = false;
-      setTimeout(() => {
-        document.body.removeChild(this.overlay.$el);
-        this.overlay.$destroy();
-        this.overlay = null;
-      }, 500);
+      PopupManager.closeModal();
     },
 
     lockBody() {
@@ -103,9 +126,15 @@ export default Vue.extend({
       if (!this.closeOnPressEscape) {
         return;
       }
-      this.escEvent = (event) => {
+      this.escEvent = (event: any) => {
         if (event.keyCode === 27) {
-          this.handleClose();
+          console.log(this.$options.name);
+          if (this.$options.name === 'ko-dialog') {
+            return this.handleClose();
+          }
+          if (this.$options.name === 'ko-message-box') {
+            return this.handleAction('close');
+          }
         }
       };
       window.addEventListener('keydown', this.escEvent);
@@ -119,10 +148,10 @@ export default Vue.extend({
     },
 
     updataZIndex() {
-      if (this.overlay) {
-        this.overlay.$el.style.zIndex = context.nextIndex();
+      if (this.modal) {
+        PopupManager.Modal.$el.style.zIndex = PopupManager.nextIndex();
       }
-      (this as any).$el.style.zIndex = context.nextIndex();
+      (this as any).$el.style.zIndex = PopupManager.nextIndex();
     },
   },
 });
