@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ko-button type="text" @click="dialogVisible = true">点击打开 Dialog</ko-button>
+    <ko-button type="text" @click="aaa">点击打开 Dialog</ko-button>
 
     <ko-dialog
       title="提示"

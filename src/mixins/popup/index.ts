@@ -1,28 +1,50 @@
 import Vue from 'vue';
 import KoModalMask from '../../components/modal-mask';
 
-const context = {
-  zIndex: 1000,
-  nextIndex() {
-    this.zIndex++;
-    return this.zIndex;
-  },
-  overlay: null,
-  stack: [],
-};
-
 const PopupManager = {
   zIndex: 1000,
 
   Modal: null as any,
 
-  modalStack: [],
+  modalStack: [] as any[],
+
+  escEvent: null as any,
+
+  addStack(comp: any) {
+    this.modalStack.push(comp);
+    this.showModal();
+    this.updataZIndex();
+  },
+
+  popStack() {
+    this.modalStack.pop();
+
+    if (this.modalStack.length > 0) {
+      this.Modal.$el.style.zIndex =
+        this.modalStack[this.modalStack.length - 1].$el.style.zIndex - 1;
+    }
+    if (!this.modalStack.length) {
+      this.Modal.visible = false;
+      this.destroyModal();
+    }
+  },
 
   showModal() {
     if (!this.Modal) {
       this.genModal();
+      this.addEscEvent();
     }
     this.Modal.visible = true;
+  },
+
+  updataZIndex() {
+    if (this.Modal) {
+      this.Modal.$el.style.zIndex = this.nextIndex();
+    }
+    let topItem = this.modalStack[this.modalStack.length - 1];
+    if (topItem) {
+      topItem.$el.style.zIndex = this.nextIndex();
+    }
   },
 
   genModal() {
@@ -32,11 +54,34 @@ const PopupManager = {
     this.Modal = Modal;
   },
 
-  closeModal() {
-    if (!this.Modal) {
-      return;
-    }
-    this.Modal.visible = false;
+  addEscEvent() {
+    this.escEvent = (event: any) => {
+      if (!this.modalStack.length) {
+        return;
+      }
+      if (event.keyCode === 27) {
+        let comp = this.modalStack[this.modalStack.length - 1];
+        // todo
+        comp.handleClose();
+      }
+    };
+    window.addEventListener('keydown', this.escEvent);
+  },
+
+  removeEscEvent() {
+    window.removeEventListener('keydown', this.escEvent);
+  },
+
+  destroyModal() {
+    setTimeout(() => {
+      if (this.modalStack.length > 0) {
+        return;
+      }
+      document.body.removeChild(this.Modal.$el);
+      this.Modal.$destroy();
+      this.Modal = null;
+      this.removeEscEvent();
+    }, 200);
   },
 
   nextIndex() {
@@ -75,41 +120,23 @@ export default Vue.extend({
   },
 
   created() {
-    this.listenerESC();
+    // this.listenerESC();
   },
 
   watch: {
     visible(val) {
       if (val) {
-        this.showOverlay();
+        PopupManager.addStack(this);
         this.lockBody();
-        this.updataZIndex();
-        // this.addEscEvent();
       } else {
-        this.closeOverlay();
+        PopupManager.popStack();
         this.noLockBody();
-        // this.removeEscEvent();
       }
+      // console.log(PopupManager.modalStack);
     },
   },
 
   methods: {
-    showOverlay() {
-      if (!this.modal) {
-        return;
-      }
-
-      PopupManager.showModal();
-    },
-
-    closeOverlay() {
-      if (!this.modal) {
-        return;
-      }
-
-      PopupManager.closeModal();
-    },
-
     lockBody() {
       if (this.lockScroll) {
         document.body.classList.add('ko-popup-lock');
@@ -118,40 +145,6 @@ export default Vue.extend({
 
     noLockBody() {
       document.body.classList.remove('ko-popup-lock');
-    },
-
-    listenerESC() {},
-
-    addEscEvent() {
-      if (!this.closeOnPressEscape) {
-        return;
-      }
-      this.escEvent = (event: any) => {
-        if (event.keyCode === 27) {
-          console.log(this.$options.name);
-          if (this.$options.name === 'ko-dialog') {
-            return this.handleClose();
-          }
-          if (this.$options.name === 'ko-message-box') {
-            return this.handleAction('close');
-          }
-        }
-      };
-      window.addEventListener('keydown', this.escEvent);
-    },
-
-    removeEscEvent() {
-      if (!this.closeOnPressEscape) {
-        return;
-      }
-      window.removeEventListener('keydown', this.escEvent);
-    },
-
-    updataZIndex() {
-      if (this.modal) {
-        PopupManager.Modal.$el.style.zIndex = PopupManager.nextIndex();
-      }
-      (this as any).$el.style.zIndex = PopupManager.nextIndex();
     },
   },
 });
