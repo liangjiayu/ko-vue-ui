@@ -61,7 +61,7 @@ const PopupManager = {
       }
       if (event.keyCode === 27) {
         let comp = this.modalStack[this.modalStack.length - 1];
-        // todo
+        // TODO 多种组件可能有不同的关闭方法
         comp.handleClose();
       }
     };
@@ -119,10 +119,6 @@ export default Vue.extend({
     };
   },
 
-  created() {
-    // this.listenerESC();
-  },
-
   watch: {
     visible(val) {
       if (val) {
@@ -132,7 +128,6 @@ export default Vue.extend({
         PopupManager.popStack();
         this.noLockBody();
       }
-      // console.log(PopupManager.modalStack);
     },
   },
 

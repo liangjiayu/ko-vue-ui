@@ -1,7 +1,7 @@
 import './style/index.scss';
-import button from './components/button';
-import icon from './components/icon';
-import iconx from './components/iconx';
+import Button from './components/button';
+import Icon from './components/icon';
+import Iconx from './components/iconx';
 import Alert from './components/alert';
 import Row from './components/row';
 import Col from './components/col';
@@ -12,9 +12,9 @@ import CheckboxGroup from './components/checkbox-group';
 import Dialog from './components/dialog';
 
 const components = [
-  button,
-  icon,
-  iconx,
+  Button,
+  Icon,
+  Iconx,
   Alert,
   Row,
   Col,
@@ -25,7 +25,6 @@ const components = [
   Dialog,
 ];
 
-// eslint-disable-next-line
 function install(Vue: any) {
   components.forEach((item) => {
     Vue.use(item);
